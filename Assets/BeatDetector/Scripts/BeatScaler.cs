@@ -13,6 +13,10 @@ namespace AM1.BeatDetector
         [Tooltip("ビート減衰秒数"), SerializeField]
         float beatDampingSeconds = 0.1f;
 
+        [Header("デバッグ")]
+        [Tooltip("タイミング表示"), SerializeField]
+        bool showGUI = false;
+
         Transform quadTransform = default;
 
         /// <summary>
@@ -51,10 +55,13 @@ namespace AM1.BeatDetector
 
         private void OnGUI()
         {
-            GUI.color = Color.red;
-            GUI.Label(new Rect(20, 20, 1000, 30), $"{beatCount} {BeatDetector.Instance.GetSamplesWithBeat(beatCount)} {BeatDetector.CurrentTimeSamples} ");
-            var t = beatTime - Time.time;
-            GUI.Label(new Rect(20, 50, 1000, 30), $"{beatTime:0.00} {beatTime/beatDampingSeconds:0.00}");
+            if (showGUI)
+            {
+                GUI.color = Color.red;
+                GUI.Label(new Rect(20, 20, 1000, 30), $"{beatCount} {BeatDetector.Instance.GetSamplesWithBeat(beatCount)} {BeatDetector.CurrentTimeSamples} ");
+                var t = beatTime - Time.time;
+                GUI.Label(new Rect(20, 50, 1000, 30), $"{beatTime:0.00} {beatTime / beatDampingSeconds:0.00}");
+            }
         }
     }
 }
